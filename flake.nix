@@ -8,9 +8,9 @@
     nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Add subflakes as flake inputs
-    pwar.url = "path:./PWAR/linux";
-    pw-ghost-rec.url = "path:./pw-ghost-rec";
+    self.submodules = true;
+    pwar.url = "./PWAR";
+    pw-ghost-rec.url = "./pw-ghost-rec";
   };
 
   outputs = { self, nixpkgs, nix-formatter-pack, flake-utils, pwar, pw-ghost-rec }:
