@@ -1,0 +1,6 @@
+[submodule "pw-ghost-rec"]
+	path = pw-ghost-rec
+	url = git@github.com:ripxorip/pw-ghost-rec.git
+[submodule "PWAR"]
+	path = PWAR
+	url = git@github.com:ripxorip/PWAR.git
