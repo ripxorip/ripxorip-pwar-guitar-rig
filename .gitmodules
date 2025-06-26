@@ -4,3 +4,6 @@
 [submodule "PWAR"]
 	path = PWAR
 	url = git@github.com:ripxorip/PWAR.git
+[submodule "midi_udp_streamer"]
+	path = midi_udp_streamer
+	url = git@github.com:ripxorip/midi_udp_streamer.git
