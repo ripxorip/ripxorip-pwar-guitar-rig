@@ -5,7 +5,7 @@ trap cleanup SIGINT
 
 cleanup() {
     echo "[Ghost Rig] Caught Ctrl+C. Killing..."
-    kill -TERM -$PWAR_PGID -$REC_PGID 2>/dev/null
+    kill -TERM -$PWAR_PGID -$REC_PGID -$MIDI_PGID 2>/dev/null
     echo "[Ghost Rig] Done."
     exit 0
 }
@@ -23,9 +23,14 @@ echo "[2] Starting pw-ghost-rec..."
 REC_PID=$!
 REC_PGID=$REC_PID
 
+echo "[3] Starting midi_udp_streamer..."
+( nix run .#midi-udp-streamer | sed 's/^/[MIDI]: /' ) &
+MIDI_PID=$!
+MIDI_PGID=$MIDI_PID
+
 sleep 2
 
-echo "[3] Connecting ports..."
+echo "[4] Connecting ports..."
 ./scripts/connect.sh
 
 echo "[Ghost Rig] Running. Ctrl+C to quit."

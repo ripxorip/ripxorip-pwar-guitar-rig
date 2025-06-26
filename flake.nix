@@ -11,20 +11,23 @@
     self.submodules = true;
     pwar.url = "./PWAR";
     pw-ghost-rec.url = "./pw-ghost-rec";
+    midi_udp_streamer.url = "./midi_udp_streamer";
   };
 
-  outputs = { self, nixpkgs, nix-formatter-pack, flake-utils, pwar, pw-ghost-rec }:
+  outputs = { self, nixpkgs, nix-formatter-pack, flake-utils, pwar, pw-ghost-rec, midi_udp_streamer }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         pwarPkg = pwar.packages.${system}.default;
         pwGhostRecPkg = pw-ghost-rec.packages.${system}.default;
+        midiUdpStreamerPkg = midi_udp_streamer.packages.${system}.default;
       in {
         formatter = pkgs.nixpkgs-fmt;
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             pwarPkg
             pwGhostRecPkg
+            midiUdpStreamerPkg
             pipewire
             pw-link
             pw-jack
@@ -34,9 +37,10 @@
         };
         packages.pwar = pwarPkg;
         packages.pw-ghost-rec = pwGhostRecPkg;
+        packages.midi-udp-streamer = midiUdpStreamerPkg;
         packages.start = pkgs.writeShellApplication {
           name = "start";
-          runtimeInputs = [ pkgs.bash pkgs.coreutils pkgs.gnused pkgs.gawk pwarPkg pwGhostRecPkg ];
+          runtimeInputs = [ pkgs.bash pkgs.coreutils pkgs.gnused pkgs.gawk pwarPkg pwGhostRecPkg midiUdpStreamerPkg ];
           text = builtins.readFile ./scripts/start.sh;
         };
         packages.default = self.packages.${system}.start;
