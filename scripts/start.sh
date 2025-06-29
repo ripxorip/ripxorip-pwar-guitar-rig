@@ -28,8 +28,6 @@ echo "[3] Starting midi_udp_streamer..."
 MIDI_PID=$!
 MIDI_PGID=$MIDI_PID
 
-sleep 2
-
 echo "[4] Connecting ports..."
 ./scripts/connect.sh
 
